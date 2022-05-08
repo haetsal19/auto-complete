@@ -41,9 +41,9 @@ export default function Home() {
         };
 
         try {
-            const response = await axios.get(`https://hn.algolia.com/api/v1/search?query=${query}`);
+            const response = await axios.get(`https://hn.algolia.com/api/v1/search?query=${query}&hitsPerPage=50`);
             const result = response.data.hits;
-            setTitleList(result.filter(({ title }) => title !== null).map(({ title, objectID }) => {
+            setTitleList(result.filter(({ title }) => title !== null && title.toLowerCase().startsWith(query.trim().toLowerCase())).map(({ title, objectID }) => {
                 return { title, id: objectID }
             }))
         } catch (e) {
